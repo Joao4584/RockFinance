@@ -1,0 +1,25 @@
+{
+  "name": "Server-RockFinance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "nodemon -e ts,json src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "@types/node": "^15.12.5",
+    "@types/sequelize": "^4.28.14",
+    "@types/validator": "^13.1.4"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^3.1.2",
+    "sequelize": "^6.28.0",
+    "validator": "^13.6.0"
+  }
+}
