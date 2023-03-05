@@ -1,12 +1,18 @@
+// * Modules * //
+import { BrowserRouter } from "react-router-dom";
+
+// * Exports * //
 import { AuthProvider } from "../Context/auth.context";
-import { AuthRoutes } from "../Routes/auth.routes";
+import { AuthRoutes } from "../Routes/routes";
 import { GlobalStyle } from "./Theme/Global";
 
 export function App() {
     return (
         <AuthProvider>
             <GlobalStyle />
-            <AuthRoutes />
+            <BrowserRouter>
+                <AuthRoutes />
+            </BrowserRouter>
         </AuthProvider>
     );
 }

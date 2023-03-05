@@ -9,4 +9,8 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Inter';
     }
 
+    body{
+        color: #f1f1f1;
+    }
+
 `;
