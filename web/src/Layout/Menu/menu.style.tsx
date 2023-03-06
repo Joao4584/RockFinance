@@ -11,7 +11,6 @@ export const Menu = styled.div`
 
 export const Container = styled.div`
     color: white;
-    background-color: #0080005c;
     width: 100%;
     height: 100%;
     max-width: 940px;
