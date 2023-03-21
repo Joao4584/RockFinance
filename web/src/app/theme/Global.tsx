@@ -13,4 +13,5 @@ export const GlobalStyle = createGlobalStyle`
         color: #f1f1f1;
     }
 
+
 `;
