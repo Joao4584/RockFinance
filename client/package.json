@@ -10,7 +10,10 @@
     "export": "next export"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.17",
+    "@mui/material": "^5.14.9",
     "@phosphor-icons/react": "^2.0.10",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",

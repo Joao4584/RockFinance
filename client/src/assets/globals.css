@@ -8,3 +8,7 @@
 body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
+
+.buttonGradient.active{
+    background: linear-gradient(to right, #7a7a7a80, #66666623);
+}

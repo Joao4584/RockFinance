@@ -6,3 +6,11 @@ export const Main = tw.div`
     w-screen
     bg-back-gray
 `;
+export const Box = tw.div`
+    relative
+    z-10
+    flex
+    items-center
+    justify-center
+    
+`;

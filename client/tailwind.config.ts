@@ -10,10 +10,18 @@ const config: Config = {
     extend: {
       backgroundColor: {
         'back-gray': '#F4F4F7',
-        'back-top-blue': '#1B2437'
+        'back-top-blue': '#1B2437',
       },
+      spacing: {
+        '128': '32rem',
+        '256': '64rem',
+     
+      }
     }
   },
-  plugins: [],
+
+  plugins: [
+   
+  ],
 }
 export default config

@@ -9,7 +9,7 @@ import routes from "./routes";
 // * Component * //
 const App = express();
 
-// ? Configs
+// ? Configs 
 dotenv.config();
 App.use(express.json());
 App.use(cors());
