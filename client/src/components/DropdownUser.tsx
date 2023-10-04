@@ -6,6 +6,7 @@ import { CaretDown } from '@phosphor-icons/react';
 
 // * Exports * //
 import DefaultPerfilImage from '../assets/images/OIG.jpeg';
+import { DivEffect } from './InitEffect';
 
 // * Components * //
 
@@ -15,11 +16,11 @@ export default function DropdownUser() {
         <div className="">
             <Menu as="div" className="relative ">
                 <div className='flex items-center justify-center'>
-                    <Menu.Button className="w-11 h-11 bg-slate-500 relative  hover:bg-slate-400 bg-opacity-50 transition-all rounded-full flex justify-center items-center">
-                        <Image src={userImage ? userImage : DefaultPerfilImage} alt="Icon Perfil" style={{ width: "2.3rem", height: "2.3rem", borderRadius: '100%' }} />
-
-                        <CaretDown size={18} className='absolute -right-6 top-2/5' />
-                    </Menu.Button>
+                    <DivEffect whileTap={{ scale: 0.9 }}>
+                        <Menu.Button className="w-11 h-11 bg-slate-500 relative  hover:bg-slate-400 bg-opacity-50 transition-all rounded-full flex justify-center items-center">
+                            <Image src={userImage ? userImage : DefaultPerfilImage} alt="Icon Perfil" style={{ width: "2.3rem", height: "2.3rem", borderRadius: '100%' }} />
+                        </Menu.Button>
+                    </DivEffect>
 
                 </div>
                 <Transition

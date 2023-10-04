@@ -6,6 +6,7 @@ export const SideBar = tw.header`
     h-40
     z-10
     text-slate-100
+    duration-1
 `;
 export const Header = tw.section`
     w-full 

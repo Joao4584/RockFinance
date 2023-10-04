@@ -1,6 +1,6 @@
 "use client"
 // * Modules * //
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 
 // * Exports * //
 import * as S from "./dashboard.styles"
@@ -10,6 +10,7 @@ import HeaderBarLayout from '../header';
 // * Components * //
 
 export default function DashboardLayout({ children }: childrenProps) {
+
 
     return (
         <S.Main>
