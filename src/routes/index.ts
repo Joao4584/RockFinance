@@ -1,8 +1,10 @@
 // * Modules * //
-import express from "express";
+import express, { Request, Response } from "express";
 import path from "path"; 
-import fs from "fs";
+
 // * Exports * //
+import apiRoutes from "./api";
+import { fileExists } from "../models/existenceChecks";
  
 // * Components * //
 const routes = express.Router();
@@ -22,22 +24,12 @@ routes.use((req, res, next) => {
 	}
 });
 
+routes.use("/api", apiRoutes);
 
-routes.get("/api", (req,res) => {
-	res.json({"tes":"s"});
-});
-routes.get("*", (req, res) => {
+routes.get("*", (req: Request, res: Response) => {
 	const htmlFilePath = path.join(__dirname, "../../client/out/index.html");
 	res.sendFile(htmlFilePath);
 });
 
-
 export default routes;
 
-function fileExists(filePath: string) {
-	try {
-		return fs.existsSync(filePath);
-	} catch (err) {
-		return false;
-	}
-}

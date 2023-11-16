@@ -1,10 +1,12 @@
+// * Modules * //
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-import routes from "./routes";
+import bodyParser from "body-parser";
 
 // * Exports * //
+import routes from "./routes";
 
 // * Component * //
 const App = express();
@@ -13,6 +15,7 @@ const App = express();
 dotenv.config();
 App.use(express.json());
 App.use(cors());
+App.use(bodyParser.urlencoded({ extended: true }));
 
 App.use(express.static(path.join(__dirname, "../client/out")));
 

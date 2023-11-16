@@ -1,17 +1,15 @@
-'use client'
-
+// * Modules * //
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type User = {
-    id: string;
-    name: string;
-    email: string;
-};
+// * Exports * //
+import useLocalStorage from '@/app/hooks/useLocalStorage';
+
+
+// * Components * //
 
 type AuthContextData = {
-    user: User | null;
-    signIn: (email: string, password: string) => void;
-    signOut: () => void;
+    setJWT: (token: string) => boolean;
+    getToken: string
 };
 
 type AuthProviderProps = {
@@ -21,35 +19,21 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [user, setUser] = useState<User | null>(null);
+    const [getToken, setToken] = useLocalStorage("f495be79bad3d692");
 
-    const signIn = (email: string, password: string) => {
-        // Implemente aqui a lógica de autenticação
-        // Verifique o email e a senha e, se válidos, defina o usuário no estado.
-        const authenticatedUser: User = {
-            id: '1',
-            name: 'Exemplo',
-            email: 'exemplo@email.com',
-        };
-        setUser(authenticatedUser);
-    };
+    const setJWT = (token: string): boolean => {
+        setToken(token);
 
-    const signOut = () => {
-        // Implemente aqui a lógica de saída (logout)
-        setUser(null);
-    };
+        if (getToken == token) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     return (
-        <AuthContext.Provider value={{ user, signIn, signOut }}>
+        <AuthContext.Provider value={{ setJWT, getToken }}>
             {children}
         </AuthContext.Provider>
     );
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth deve ser usado dentro de um AuthProvider');
-    }
-    return context;
 }
