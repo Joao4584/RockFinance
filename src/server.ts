@@ -6,7 +6,7 @@ import path from "path";
 import bodyParser from "body-parser";
 
 // * Exports * //
-import routes from "./routes";
+import routes from "./routes/api";
 
 // * Component * //
 const App = express();

@@ -1,16 +1,33 @@
 // * Modules * //
-import express from "express";
+import express, { Request, Response } from "express";
+import path from "path"; 
 
 // * Exports * //
-import * as AuthController from "../controllers/authController";
-import { verificationToken } from "../middlewares/verificationMiddleware";
-
+import { fileExists } from "../scripts/existenceChecks";
+import authRoutes from "./auth";
+import userRoutes from "./users";
+ 
 // * Components * //
-const apiRoutes = express.Router();
+const routes = express.Router();
 
-apiRoutes.post("/auth/login", AuthController.login);
-apiRoutes.post("/auth/register", AuthController.register);
+routes.use((req, res, next) => {
+	if (req.url === "/api") { next(); } else {
+		const htmlFilePath = path.join(__dirname, `../../client/out${req.url}.html`);
+		if (fileExists(htmlFilePath)) {
+			res.sendFile(htmlFilePath);
+		} else { next(); }
+	}
+});
 
-apiRoutes.get("/auth/credencials", verificationToken, AuthController.searchMyUser);
+routes.use("/api/auth", authRoutes);
+routes.use("/api/users", userRoutes);
 
-export default apiRoutes;
+
+routes.get("*", (req: Request, res: Response) => {
+	const htmlFilePath = path.join(__dirname, "../../client/out/index.html");
+	res.sendFile(htmlFilePath);
+});
+
+export default routes;
+
+

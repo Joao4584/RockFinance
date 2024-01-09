@@ -1,8 +1,9 @@
 // * Modules * //
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useContext, useEffect, useRef } from "react";
 import React, { useState } from "react";
 import { Button, Popover, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AxiosError, AxiosResponse } from "axios";
 
 // * Exports * //
 import { ContainerSection, LogoImg, CardText, CardBanner } from "./index.styles"
@@ -11,15 +12,32 @@ import { DivEffect } from "@/components/InitEffect";
 import Logo from '@/assets/images/logo.png';
 import api from "@/app/api";
 import messageNotify from "@/components/Message/notify";
+import { AuthContext } from "@/app/context/authContext";
 
 
 // * Components * //
 export default function Login(): ReactElement {
+    const { setToken, getToken } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [loadings, setLoadings] = useState<boolean>();
 
     const sendLogin = () => {
+
+        if (user == "") {
+            messageNotify({
+                content: "Campo Email / Usuario esta vazio.", func: "error", key: 'login'
+            });
+            return;
+        }
+        if (password == "") {
+            messageNotify({
+                content: "Campo Senha esta vazio.", func: "error", key: 'login'
+            });
+            return;
+        }
+
         messageNotify({
             content: "Carregando..", func: "loading", key: 'login'
         });
@@ -29,14 +47,30 @@ export default function Login(): ReactElement {
             user: user,
             password: password
         })
-            .then(response => {
+            .then((response: AxiosResponse) => {
                 messageNotify({
                     content: "Logado com sucesso.", func: "success", key: 'login'
                 });
+
+                if (response.data.token) {
+                    setToken(response.data.token);
+                    return navigate("/dashboard");
+                } else {
+                    messageNotify({
+                        content: "Token não encontrado..", func: "error", key: 'login'
+                    });
+                }
             })
-            .catch(error => {
+            .catch((error: any) => {
+                let messageError;
+                if (error.response && error.response.data.message) {
+                    messageError = error.response.data.message;
+                } else {
+                    messageError = "Usuario ou senha incorretos...";
+                }
+
                 messageNotify({
-                    content: "Usuario ou senha incorretos.", func: "error", key: 'login'
+                    content: messageError, func: "error", key: 'login'
                 });
             })
             .finally(() => {

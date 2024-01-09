@@ -1,13 +1,14 @@
 // * Modules * //
 import { Request, Response } from "express";
-import { AuthenticateLogin } from "../services/authenticateLogin";
-import { getIpClient } from "../models/clientIP";
-import { UseJsonWebToken } from "../services/usageJsonWebToken";
-import { AuthenticatedRequest } from "../middlewares/verificationMiddleware";
 import { PrismaClient } from "@prisma/client";
+import moment from "moment";
 
 // * Exports * //
- 
+import { AuthenticateLogin } from "../models/authenticateLogin";
+import { getIpClient } from "../scripts/clientIP";
+import { UseJsonWebToken } from "../models/usageJsonWebToken";
+import { AuthenticatedRequest } from "../middlewares/verificationMiddleware";
+import Logs from "../services/logs";
  
 // * Components * //
 const prisma = new PrismaClient();
@@ -21,6 +22,14 @@ export const login = (req: Request, res: Response) =>{
 			if(user){
 				if(user?.id, user?.name, user?.user ){
 					const token = UseJsonWebToken.createJWT({id: user?.id, name: user?.name, user: user?.user});
+					Logs.create(
+						"Logado no sistema",
+						"logged_sucess",
+						"Usuário logado com <b>Sucesso</b> no sistema!",
+						user.id,
+						null
+					);
+
 					res.json({ token: token, message: "Logado com sucesso!" });
 				}else{
 					res.status(500).json({ message: "Ocorreu um erro interno." });
@@ -64,15 +73,30 @@ export const searchMyUser = async (req: AuthenticatedRequest, res: Response) => 
 				email: true,
 				name: true,
 				user: true,
-				ip_acess: true
+				ip_acess: true,
+				image_url: true,
+				status: true,
+				created_at: true
 			}
 		});
 	
 		if (user) {
-			res.json({ data: user });
+			moment.locale("pt-br");
+			const formattedCreatedAt = moment(user.created_at).format("DD/MM/YYYY");
+			const timeCreatedAt = moment(user.created_at).startOf("day").fromNow();
+
+			const userResponse = {
+				...user,
+				formatted_created_at: formattedCreatedAt,
+				timeCreatedAt: timeCreatedAt
+			};
+		
+			res.json({ data: userResponse });
 		} else {
 			res.status(401).json({ message: "Usuário não encontrado" });
 		}
+	}else{
+		res.status(401).json({ message: "Usuário não iniciado." });
 	}
 	
 };

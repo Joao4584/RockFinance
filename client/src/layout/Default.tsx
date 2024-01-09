@@ -3,8 +3,8 @@ import React, { ReactElement } from "react";
 import { Route, Routes } from "react-router";
 
 // * Exports * //
-import HomePage from "../pages/Home";
-import HomeNotFound from "../pages/Home/notFound";
+import HomePage from "../pages/LandingPage";
+import HomeNotFound from "../pages/LandingPage/notFound";
 
 
 // * Components * //

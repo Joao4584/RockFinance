@@ -1,6 +1,6 @@
 export default function BackgroundSideBar(props: { isHome: boolean }) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" className={` ${props.isHome ? 'h-72' : 'h-24'} duration-300   w-full max-sm:h-52 `} version="1.1" preserveAspectRatio="none" viewBox="0 0 1440 306">
+        <svg xmlns="http://www.w3.org/2000/svg" className={` ${props.isHome ? 'h-72' : 'h-44'} duration-300   w-full max-sm:h-52 `} version="1.1" preserveAspectRatio="none" viewBox="0 0 1440 306">
             <g mask="url(&quot;#SvgjsMask1543&quot;)" fill="none">
                 <rect width="1440" height="426" x="0" y="0" fill="#332f50"></rect>
                 <path d="M0,600.124C111.509,593.199,155.101,447.668,245.555,382.091C328.81,321.733,450.232,317.098,507.865,231.934C568.178,142.81,566.918,26.986,558.468,-80.296C549.591,-193,535.124,-314.177,458.319,-397.135C382.206,-479.346,260.652,-490.169,152.37,-518.926C46.944,-546.924,-57.087,-576.974,-165.234,-562.734C-286.259,-546.798,-434.618,-536.283,-499.773,-433.056C-566.084,-327.997,-460.322,-191.695,-477.123,-68.6C-493.73,53.075,-645.268,159.698,-596.031,272.198C-547.036,384.146,-373.036,354.954,-265.971,413.859C-169.18,467.111,-110.261,606.972,0,600.124" fill="#272541"></path>

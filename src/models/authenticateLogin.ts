@@ -2,7 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 
 // * Exports * //
-import { hashMD5 } from "../models/createHash";
+import { hashMD5 } from "../scripts/createHash";
  
 // * Components * //
 const prisma = new PrismaClient();

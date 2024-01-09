@@ -24,7 +24,7 @@ const config = {
       screens: {
         'sm': {'max': '600px'},
         'md': {'max': '810px'},
-      }
+      },
     }
   },
 

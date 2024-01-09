@@ -11,6 +11,8 @@ import { LI_VARIANT, UL_VARIANT } from "../../functions/json/animationLoader";
 import { DivEffect } from "../InitEffect";
 import BackgroundSideBar from "../../assets/svg/backgroundSideBar";
 import Icon from '../../assets/images/logo.png';
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/authContext";
 
 // * Components * //
 const MenuList: any = [
@@ -30,6 +32,7 @@ const MenuList: any = [
 
 export default function HeaderBarLayout() {
     const { pathname }: any = useLocation();
+    const { userInfo } = useContext(AuthContext);
 
     return (
         <S.SideBar className={pathname == '/dashboard' ? "" : "h-20"} >
@@ -88,7 +91,7 @@ export default function HeaderBarLayout() {
                 pathname == '/dashboard' ? <>
                     <DivEffect>
                         <div className="w-full h-16 text-slate-100 flex justify-center ">
-                            <h1 className="text-2xl px-3 mt-5 font-semi w-full max-w-7xl tracking-wide">Bem vindo de volta, <b>João Roberto </b>!</h1>
+                            <h1 className="text-2xl px-3 mt-5 font-semi w-full max-w-7xl tracking-wide">Bem vindo de volta, <b>{userInfo.name ? userInfo.name : '--'}</b>!</h1>
                         </div>
                     </DivEffect>
                 </> : <></>

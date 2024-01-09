@@ -1,14 +1,17 @@
 // * Modules * //
 import React, { createContext, ReactElement, useEffect, useState } from 'react';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, Divider, Modal, Space } from 'antd';
+import { Button, Divider, Image, Modal, Space } from 'antd';
 import { CircleNotch } from '@phosphor-icons/react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Input } from 'antd';
+import { sendImage } from '@/app/api/users';
 
 
 // * Exports * //
 import DefaultPerfilImage from '@/assets/images/profile/OIG.jpeg';
+import messageNotify from '../Message/notify';
+import refreshPage from '@/functions/refreshPage';
 
 // * Components * //
 const { Search } = Input;
@@ -17,30 +20,50 @@ const countCards: number = 8;
 export function ImageProfileModal() {
     const [modal, setModal] = useState(false);
     const [imageUrls, setImageUrls] = useState<string>("");
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
         setModal(true);
     }, []);
 
+    useEffect(() => {
+        searchURL()
+    }, [imageUrls]);
 
     const searchURL = async () => {
-        // Substitua 'sua-api-para-buscar-url-da-imagem' pela URL da sua API que retorna a URL da imagem
         try {
             const response = await axios.get(imageUrls);
-            setImageUrls(response.data.url);
         } catch (error) {
             console.error('Erro ao buscar a URL da imagem:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
-    const handleSearch = () => {
-        setLoading(true);
-        searchURL();
-    };
+    const defineImage = async () => {
+        const result: AxiosResponse<any, any> = await sendImage({ imageUrl: imageUrls });
+
+        if (result.status == 200) {
+            messageNotify({ func: 'success', content: "Imagem de perfil editada com sucesso." });
+            setModal(false);
+            setTimeout(() => {
+                refreshPage();
+            }, 2000);
+        } else {
+            messageNotify({ func: 'error', key: 'image_error', time: 2, content: "Ocorreu um erro ao editar a imagem." });
+        }
+    }
+    const defineDefaultImage = async () => {
+        const result: AxiosResponse<any, any> = await sendImage({ imageUrl: "---" });
+
+        if (result.status == 200) {
+            messageNotify({ func: 'success', content: "Imagem de perfil editada com sucesso." });
+            setModal(false);
+            setTimeout(() => {
+                refreshPage();
+            }, 2000);
+        } else {
+            messageNotify({ func: 'error', key: 'image_error', time: 2, content: "Ocorreu um erro ao editar a imagem." });
+        }
+    }
 
     return (
         <Modal
@@ -50,11 +73,11 @@ export function ImageProfileModal() {
             </React.Fragment>}
             open={modal}
             onCancel={() => setModal(false)}
-            maskClosable={false}
-            closeIcon={false}
+            maskClosable={true}
+            closeIcon={true}
             footer={<footer className='mt-8'>
-                <Button >Usar Padrão</Button>
-                <Button type='primary' >Salvar</Button>
+                <Button onClick={defineDefaultImage}>Usar Padrão</Button>
+                <Button type='primary' onClick={defineImage}>Salvar</Button>
             </footer>}
         >
             <div className='flex flex-wrap gap-4 mb-4'>
@@ -62,10 +85,16 @@ export function ImageProfileModal() {
             </div>
             <section>
                 <div className="flex justify-center mb-4">
-                    <img src={imageUrls ? imageUrls : DefaultPerfilImage} className='w-16 h-16 rounded-full border border-2 border-gray-300' />
+                    <Image
+                        src={imageUrls ? imageUrls : DefaultPerfilImage}
+                        preview={false}
+                        width={100}
+                        height={100}
+                        fallback={DefaultPerfilImage}
+                        className='rounded-full border border-2 border-gray-300' />
 
                 </div>
-                <Search placeholder="Coloque aqui o URL" loading={loading} value={imageUrls} onChange={(e: any) => setImageUrls(e.target.value)} enterButton onSearch={handleSearch} />
+                <Input placeholder="Coloque aqui o URL" value={imageUrls} onChange={(e: any) => setImageUrls(e.target.value)} />
             </section>
         </Modal>
     );

@@ -9,7 +9,7 @@ import "./app/globals.css";
 import LayoutPainel from './layout/Painel';
 import LayoutAuth from './layout/Auth';
 import LayoutDefault from './layout/Default';
-import { AuthProvider } from './context/authContext';
+import { AuthProvider } from './app/context/authContext';
 
 // * Components * //
 const container: any = document.getElementById('APP');
