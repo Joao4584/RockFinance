@@ -4,12 +4,13 @@ import { Button, Divider, Modal, Table } from 'antd';
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import type { FilterValue, SorterResult } from 'antd/es/table/interface';
 import React, { useEffect, useState } from 'react';
-
+import { motion } from 'framer-motion';
 
 // * Exports * //
 import { CardTable } from "./categoria.styles";
 import ModalCreateCategory from './create-categories';
 import ModalCategory from './create-categories';
+import { navVariants, staggerContainer } from '@/utils/motion';
 
 // * Components * //
 
@@ -113,26 +114,35 @@ export function CategoriasPage() {
     return (
         <section className="w-100 flex flex-wrap justify-center">
             <ModalCategory visible={modal} setVisible={setModal} action="create" />
-            <CardTable className="w-256 h-16 mt-9 flex justify-between items-center px-4">
-                <Button
-                    type='dashed'
-                    className='h-100'
-                    onClick={() => setModal(true)}
-                >
-                    Cadastrar
-                </Button>
-            </CardTable>
-            <CardTable className="w-256 p-3">
-                <Table
-                    columns={columns}
-                    className='rounded-3xl'
-                    rowKey={(record) => record.login.uuid}
-                    dataSource={data}
-                    pagination={tableParams.pagination}
-                    loading={loading}
-                    onChange={handleTableChange}
-                />
-            </CardTable>
+            <motion.div
+                variants={navVariants}
+                initial="hidden"
+                whileInView="show"
+                className={` mx-auto  flex-col`}
+            >
+
+                <CardTable className="w-256 h-16 mt-9 flex justify-between items-center px-4">
+                    <Button
+                        type='dashed'
+                        className='h-100'
+                        onClick={() => setModal(true)}
+                    >
+                        Cadastrar
+                    </Button>
+                </CardTable>
+                <CardTable className="w-256 p-3">
+                    <Table
+                        columns={columns}
+                        className='rounded-3xl'
+                        rowKey={(record) => record.login.uuid}
+                        dataSource={data}
+                        pagination={tableParams.pagination}
+                        loading={loading}
+                        onChange={handleTableChange}
+                    />
+                </CardTable>
+            </motion.div>
+
         </section>
     )
 }

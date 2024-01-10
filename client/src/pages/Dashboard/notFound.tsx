@@ -34,7 +34,7 @@ export default function DashboardNotFound() {
 
                 <Link
                     to="/dashboard"
-                    className="inline-block px-5 py-3 mt-6 text-sm font-medium text-white bg-purple-gray rounded hover:bg-indigo-700 focus:outline-none focus:ring"
+                    className="inline-block px-5 py-3 mt-6 text-sm font-medium text-white bg-purple-gray rounded hover:bg-purple-900 focus:outline-none focus:ring"
                 >
                     Ir para o Inicio
                 </Link>
